@@ -1,0 +1,172 @@
+Big data struct
+
+@ +0x20 80aa84a0
+
+
+
+804e4f68 -> 804e4f78
+
+
+
+
+galaga save data access ptr = 804e4f08, linked list of ptrs?
+
+@ 804e4f24 = 80b77ce0
+
+804e4ed8
+
+804e4ee8 param_1
+
+80aa84a0 changing this value to anything nonzero reloads the level
+
+80323a48 -> 804cd7d0 -> 80306b28 -> "kingdom::game::g01::cRecordStageAccess"
+
+struct ROOT {
+    int padding;
+    char name[0x10];
+    void* prev;
+    void* next;
+
+};
+
+80aa8fc4 addr of ROOT string
+
+803e0420 -> 804cd720 -> 803063b0 ->
+
+ROOT is originally cJetTask
+
+note:
+------
+PAC N ROLL DEBUG MENU
+
+SET PC TO 8010f6c0
+------
+
+note: down here is actually organized addresses and runtime architecture information
+note 2: this is going to get really really messy, really really fast. i need a better way to organize this
+
+cAppDebugMenu @ 80fdf6a0
+    parent = 80aa93c0 -> Usr Root
+
+    ptr3 = 80b7c160 -> cAppKingdom
+    ptr4 = 803d7060 -> 804ceb08 -> 80314008 -> "kingdom::game::g03::cAppPacnRollDebugMenu"
+
+    endptr = 80314090 -> game name
+    803d7028 -> 804d21d0 -> menu list
+
+Base class info:
+    ptr1 = @0x4[au32]
+
+ROOT @ 80aa8fc0
+    ptr1 = 0
+
+Sys Root @ 80aa9040
+    ptr1 = 80aa8fc0 -> ROOT
+
+Pad Sync @ 80aa90c0
+    ptr1 = 80aa9040 -> Sys Root    # parent
+    ptr2 = 80ab21e0 -> cKingdomSys # child
+
+Usr Root @ 80aa93c0
+    ptr1 = 80aa8fc0 -> ROOT
+    before hub, ptr2 = 80b77ce0 -> cAppKingdom(beforehub)
+    after hub, ptr2 = 80b7c160 -> cAppKingdom(afterhub)
+
+cKingdomSys @ 80ab21e0
+    ptr1 = 80aa90c0 -> Pad Sync
+    ptr2 = 80abfba0 -> cTaskSysPad(#1)
+
+cTaskSysPad(#1) @ 80abfba0
+    ptr1 = 80ab21e0 -> cKingdomSys
+    ptr3 = 80abfda0
+
+cTaskSysHBM @ 80abfda0
+    ptr1 = 80ab21e0 -> cKingdomSys
+    ptr2 = 0
+    ptr3 = 0
+
+    ptr4 = 80abfba0 -> cTaskSysPad(#1)
+    ptr5 = 80325a2c -> 804cda18 -> 80308128 -> "kingdom::cTaskSysHBM"
+
+cAppKingdom(beforehub) @ 80b77ce0
+    @@!!! addr gone after title screen
+
+    boot, ptr5 = 803237c8 -> 804cd7b0 -> 803066f0 -> "kingdom::boot::cAppBoot"
+    attract, ptr5 = 803d3108 -> 804ce898 -> 80311648 -> "kingdom::menu::cAppAttract"
+    title, ptr5 = 803e4380 -> 804cf168 -> 8031a7f8 -> "kingdom::menu::cAppTitle"
+
+cAppKingdom(afterhub) (size: 0xf60) @ 80b7c160
+    ptr2 = 80b7d0c0 -> cTaskPause
+    ptr5 = 803d3218 -> 804ce8a8 -> 8031195c -> "kingdom::game::g03::cAppMenu"
+
+    @ 80b7c318 = 80b80a00 -> cTaskScnRoot
+    @ 80b7c31c = 80b893c0 -> cTaskEffect
+
+    @ 80b7c3ec = 80b87d80 -> cTaskStage
+
+    @ 80b7c3f0 = 80de8920 -> cTaskCharPacman
+    @ 80b7c3f4 = 80b88480 -> cTaskCamera
+    @ 80b7c3f8 = 80b87f80 -> cTaskCollision
+    @ 80b7c3fc = 80df31e0 -> cTaskItem
+
+    @ 80b7c400 = 80ed5660 -> u32
+    @ 80b7c404 = 80ed5400 -> cTaskGate
+    @ 80b7c408 = 80de84c0 -> cTaskConsoleMan
+    @ 80b7c40c = 80ed5200 -> cTaskBox(size: 0x200)
+
+    @ 80b7c414 = 80b88900 -> cTaskPacFade
+    @ 80b7c418 = 80edd640 -> 80b80c40 -> 803ebb30 -> u32
+    @ 80b7c41c = 80b88440 -> 80b80c40 -> 803ebb30 -> u32
+
+
+cTaskEffect @ 80b893c0 (at hub next to galaga remix)
+    ptr1 = 80b87d80 -> cTaskStage
+    ptr3 = 80edd680 -> cTaskAnita
+
+    ptr4 = 80ed5a00 -> cTaskGhostMan
+    ptr5 = 803cd448 -> 804ce248 -> 8030e9e0 -> "kingdom::game::g03::cTaskEffect"
+
+    @ +0x1d0 80b89590 = 80b8b590 -> 921449e0 # = u8** ptkFile
+    @ +0x1d4 80b89594 = 80b95600 -> 80b95670 = u32
+    @ +0x1d8 80b89598 = 80b8baa0 -> u32
+
+    @ +0x1f0 80b895b0 = 803d0478 -> 80009ca0 = u32 0x2c030000
+    @ +0x1f4 80b895b4 = 80b935c0 -> u32
+    @ +0x1f8 80b895b8 = 803d0478 -> 80009ca0 = u32 0x2c030000
+    @ +0x1fc 80b895bc = 803cd5f8 -> 804ce290 -> 8030eac0 -> "jet::ptk::cJetPtkTex"
+
+    @ +0x200 80b895c0 = 80b896d0 -> u32
+
+
+    @ +0x2f0 80b896b0 = 80b95670 -> u32
+
+    @ +0x304 80b896c4 = 803e4180 -> 804cf110 -> 8031a540 -> "jet::ptk::cJetPtkEmi"
+
+
+    @ 80b897b4 = 80b97f70 -> u32
+    @ 80b897c4 = 803e4180 -> 804cf110 -> 8031a540 -> "jet::ptk::cJetPtkEmi"
+    @ 80b897e0 = 80b89930 -> u32
+
+    # vvv pointer to ptk generator data
+    @ 80b89924 = 80b996b0 -> 92156130 -> section within ptk ptk file, particle generator named "オレンジ蝶" in Shift-JIS which is orange butterfly
+        ptk file is at 92155920
+
+    @ 80b8992c = 803cd5e0 -> 804ce280 -> 8030ea8c -> "jet::ptk::cJetPtkGen"
+
+
+
+    @ 80b89a68 = 80ba31b0 -> 92150c30 -> generator named GEN00 for water
+    @ 80b89a6c = 803cd5e0 -> 804ce280 -> 8030ea8c -> "jet::ptk::cJetPtkGen"
+
+    @ 80b89a80 = 80b89c10 -> u32
+
+    ...
+
+cTaskAnita @ 80edd680
+    ptr1 = 80b87d80 -> cTaskStage
+
+cTaskStage @ 80b87d80
+    ptr1 = 80b7c160 -> cAppKingdom(ahub)
+
+cTaskSysPad(#2) @ c0abfba0
+    ptr1 = 80ab21e0 -> cKingdomSys

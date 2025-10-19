@@ -10,6 +10,9 @@ To be completely honest, for now at least, I probably won't have any of this stu
 
 - For decompilation/disassembly, I will be using the US version of the game
 
+# Executable decomp
+Related info with addresses and stuff would be found in ADDRESSES.txt and ADDRESS_TREE.txt. Note these files are specific to the US version of Namco Museum Remix RN2EAF. Also things are a work in progress and the way I've organized it is only BARELY intelligble to me.
+
 # File formats reversing
 ## ARCV (.arc)
 An ARCV archive is **always** in little-endian. Unlike basically every other file in a Wii game,

@@ -1,0 +1,30 @@
+cAppDebugMenuBase char***
+    L mainDebug
+    L initBigDebug
+    L galagaDebug1
+    g03DebugMenu
+    waniwaniDebug
+    rsoDebug
+
+cAppDebugMenu char*
+    L setDebugMenu
+
+kingdom::cAppDebugMenu char***
+    L mainDebug
+    L galagaDebug1
+    L unkDebug_noThunk
+    L zz_80012a40_
+    L g03DebugMenu
+    L zz_80110324_
+    L waniwaniDebug
+    L zz_8016f8fc_
+    L rsoDebug
+    L zz_801a345c_
+
+class cJetNode {
+public:
+    int align
+    cJetNode() {
+
+    }
+}
